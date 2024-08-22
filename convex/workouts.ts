@@ -2,10 +2,13 @@ import { v } from "convex/values";
 import { mutation, query } from "./_generated/server";
 import { Id } from "./_generated/dataModel";
 
-export const get = query({
+export const list = query({
   args: {},
   handler: async (ctx) => {
-    return await ctx.db.query("workouts").collect();
+    const auth = await ctx.auth.getUserIdentity()
+    return await ctx.db.query("workouts")
+      .filter(q => q.eq(q.field("userId"), auth?.subject))
+      .collect();
   },
 });
 
@@ -14,7 +17,10 @@ export const listWithReps = query({
   handler: async (ctx) => {
     const auth = await ctx.auth.getUserIdentity()
     console.log("auth", auth)
-    let workouts = await ctx.db.query("workouts").collect();
+    let workouts = await ctx.db.query("workouts")
+      .filter(q => q.eq(q.field("userId"), auth?.subject))
+      .collect();
+
     let reps = await Promise.all(
       (workouts ?? []).map(wo => ctx.db.query("logged_reps")
         .filter(q => q.eq(q.field("workoutId"), wo._id))
@@ -40,7 +46,15 @@ export const getWorkout = query({
     id: v.string()
   },
   handler: async (ctx, args) => {
-    return await ctx.db.get(args.id as Id)
+    const auth = await ctx.auth.getUserIdentity()
+    if(!auth) {
+      throw new Error("Not authorized")
+    }
+    return await ctx.db.query("workouts")
+      .filter(q => q.and(
+        q.eq(q.field("userId"), auth?.subject),
+        q.eq(q.field("_id"), args.id)
+      )).first();
   }
 })
 
@@ -50,9 +64,15 @@ export const insert = mutation({
     targetReps: v.number()
   },
   handler: async (ctx, args) => {
+    const auth = await ctx.auth.getUserIdentity()
+    if(!auth) {
+      throw new Error("Not authorized")
+    }
+
     return await ctx.db.insert("workouts", {
       name: args.name,
-      targetReps: args.targetReps
+      targetReps: args.targetReps,
+      userId: auth.subject
     })
   }
 })
@@ -62,7 +82,19 @@ export const remove = mutation({
     id: v.string()
   },
   handler: async (ctx, args) => {
-    return await ctx.db.delete(args.id as Id)
+    const auth = await ctx.auth.getUserIdentity()
+    if(!auth) {
+      throw new Error("Not authorized")
+    }
+
+    const wo = await ctx.db.query("workouts")
+      .filter(q => q.and(
+        q.eq(q.field("userId"), auth?.subject),
+        q.eq(q.field("_id"), args.id)
+      )).first();
+    if(wo) {
+      await ctx.db.delete(wo._id)
+    }
   }
 })
 
@@ -72,10 +104,36 @@ export const logReps = mutation({
     reps: v.number(),
   },
   handler: async (ctx, args) => {
-    await ctx.db.insert("logged_reps", {
-      workoutId: args.workoutId,
-      reps: args.reps,
-      timestamp: Date.now()
-    })
+    const auth = await ctx.auth.getUserIdentity()
+    if(!auth) {
+      throw new Error("Not authorized")
+    }
+
+    const wo = await ctx.db.query("workouts")
+      .filter(q => q.and(
+        q.eq(q.field("userId"), auth?.subject),
+        q.eq(q.field("_id"), args.workoutId)
+      )).first();
+
+    if(wo) {
+      await ctx.db.insert("logged_reps", {
+        workoutId: args.workoutId,
+        reps: args.reps,
+        timestamp: Date.now()
+      })
+    }
+  }
+})
+
+export const getWorkoutById = query({
+  args: {
+    id: v.string()
+  },
+  handler: async (ctx, args) => {
+    const auth = await ctx.auth.getUserIdentity()
+    if(!auth) {
+        throw new Error("Not authorized")
+    }
+    return await ctx.db.get(args.id as Id)
   }
 })

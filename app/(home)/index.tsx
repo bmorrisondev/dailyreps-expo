@@ -12,6 +12,7 @@ import { useMutation, useQuery } from 'convex/react';
 import { api } from '@/convex/_generated/api';
 import { useState } from 'react';
 import { router }  from 'expo-router';
+import LogRepsButton from '@/components/LogRepsButton';
 
 
 export default function HomeScreen() {
@@ -42,6 +43,10 @@ export default function HomeScreen() {
 
   function onAddNewWorkoutPressed() {
     router.push("/new-workout")
+  }
+
+  function onLogRepsPressed(_id: any): void {
+    router.push(`/log/${_id}`)
   }
 
   return (
@@ -83,10 +88,13 @@ export default function HomeScreen() {
         </ThemedView>
 
         <ThemedView style={styles.stepContainer}>
-            {workouts?.map(({ _id, name, currentReps }) => (
-              <Link key={_id} href={`/log/${_id}`}>
-                {name} • {currentReps ?? 0}
-              </Link>
+            {workouts?.map(({ _id, name, currentReps, targetReps }) => (
+              <LogRepsButton key={_id}
+                id={_id}
+                name={name}
+                currentReps={currentReps ?? 0}
+                targetReps={targetReps ?? 0}
+                onPress={onLogRepsPressed} />
               // <ThemedView key={_id} style={styles.workoutRow}>
               //   <Text key={_id}>• {name}</Text>
               //   <Pressable

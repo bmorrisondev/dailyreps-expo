@@ -1,31 +1,26 @@
 import { Image, StyleSheet, Platform, TextInput, Pressable, NativeSyntheticEvent, TextInputKeyPressEventData } from 'react-native';
 
-import { HelloWave } from '@/components/HelloWave';
 import ParallaxScrollView from '@/components/ParallaxScrollView';
-import { ThemedText } from '@/components/ThemedText';
 import { ThemedView } from '@/components/ThemedView';
-import { SignedIn, SignedOut, useUser } from '@clerk/clerk-expo';
-import { Link, useNavigation } from 'expo-router';
+import { SignedIn } from '@clerk/clerk-expo';
 import { Text } from 'react-native'
-import SignOutButton from '@/components/SignOutButton';
-import { useMutation, useQuery } from 'convex/react';
+import { useMutation } from 'convex/react';
 import { api } from '@/convex/_generated/api';
 import { useState } from 'react';
 import { router }  from 'expo-router';
 
 function NewWorkout() {
   const [name, setName] = useState('');
-  const navigation = useNavigation()
   const [targetReps, setTargetReps] = useState('10')
   const addWorkout = useMutation(api.workouts.insert)
 
   async function onAddNewWorkoutPressed() {
     console.log(name, Number(targetReps))
-    const id = await addWorkout({
+    await addWorkout({
       name,
       targetReps: Number(targetReps)
     })
-    router.push(`/workouts/${id}`)
+    router.back()
   }
 
   return (
