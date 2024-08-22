@@ -11,31 +11,37 @@ import SignOutButton from '@/components/SignOutButton';
 import { useMutation, useQuery } from 'convex/react';
 import { api } from '@/convex/_generated/api';
 import { useState } from 'react';
+import { router }  from 'expo-router';
+
 
 export default function HomeScreen() {
   const { user } = useUser()
   const [newWorkout, setNewWorkout] = useState('');
-  const workouts = useQuery(api.workouts.get);
-  const addWorkout = useMutation(api.workouts.insert)
-  const deleteWorkout = useMutation(api.workouts.remove)
+  const workouts = useQuery(api.workouts.listWithReps);
+  // const addWorkout = useMutation(api.workouts.insert)
+  // const deleteWorkout = useMutation(api.workouts.remove)
 
-  async function onAddNewWorkoutPressed() {
-    await addWorkout({
-      name: newWorkout
-    })
-    setNewWorkout("")
-  }
+  // async function onAddNewWorkoutPressed() {
+  //   await addWorkout({
+  //     name: newWorkout
+  //   })
+  //   setNewWorkout("")
+  // }
 
-  async function onDeleteWorkoutPressed(id: string) {
-    await deleteWorkout({
-      id
-    })
-  }
+  // async function onDeleteWorkoutPressed(id: string) {
+  //   await deleteWorkout({
+  //     id
+  //   })
+  // }
 
-  async function handleInputEnterPressed(e: NativeSyntheticEvent<TextInputKeyPressEventData>) {
-    if(e.nativeEvent.key === "Enter") {
-      await onAddNewWorkoutPressed()
-    }
+  // async function handleInputEnterPressed(e: NativeSyntheticEvent<TextInputKeyPressEventData>) {
+  //   if(e.nativeEvent.key === "Enter") {
+  //     await onAddNewWorkoutPressed()
+  //   }
+  // }
+
+  function onAddNewWorkoutPressed() {
+    router.push("/new-workout")
   }
 
   return (
@@ -54,11 +60,11 @@ export default function HomeScreen() {
         </ThemedView>
 
         <ThemedView style={styles.stepContainer}>
-          <TextInput
+          {/* <TextInput
             value={newWorkout}
             onChangeText={setNewWorkout}
             style={styles.input}
-            onKeyPress={handleInputEnterPressed} />
+            onKeyPress={handleInputEnterPressed} /> */}
           <Pressable
             style={{
               borderRadius: 5,
@@ -71,31 +77,34 @@ export default function HomeScreen() {
             onPress={onAddNewWorkoutPressed}
           >
             <Text style={{ color: "#111", fontSize: 14, fontWeight: "bold" }}>
-              Add
+              New workout
             </Text>
           </Pressable>
         </ThemedView>
 
         <ThemedView style={styles.stepContainer}>
-            {workouts?.map(({ _id, name }) => (
-              <ThemedView key={_id} style={styles.workoutRow}>
-                <Text key={_id}>• {name}</Text>
-                <Pressable
-                  style={{
-                    borderRadius: 5,
-                    backgroundColor: "#eeeeee",
-                    padding: 12,
-                    marginTop: 8,
-                    borderColor: "#ddd",
-                    borderWidth: 1
-                  }}
-                  onPress={() => onDeleteWorkoutPressed(_id)}
-                >
-                  <Text style={{ color: "#111", fontSize: 14, fontWeight: "bold" }}>
-                    X
-                  </Text>
-                </Pressable>
-              </ThemedView>
+            {workouts?.map(({ _id, name, currentReps }) => (
+              <Link key={_id} href={`/log/${_id}`}>
+                {name} • {currentReps ?? 0}
+              </Link>
+              // <ThemedView key={_id} style={styles.workoutRow}>
+              //   <Text key={_id}>• {name}</Text>
+              //   <Pressable
+              //     style={{
+              //       borderRadius: 5,
+              //       backgroundColor: "#eeeeee",
+              //       padding: 12,
+              //       marginTop: 8,
+              //       borderColor: "#ddd",
+              //       borderWidth: 1
+              //     }}
+              //     onPress={() => onDeleteWorkoutPressed(_id)}
+              //   >
+              //     <Text style={{ color: "#111", fontSize: 14, fontWeight: "bold" }}>
+              //       X
+              //     </Text>
+              //   </Pressable>
+              // </ThemedView>
             ))}
         </ThemedView>
 
