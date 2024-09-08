@@ -1,12 +1,20 @@
-import { Tabs } from 'expo-router';
+import { Redirect, Tabs } from 'expo-router';
 import React from 'react';
 
 import { TabBarIcon } from '@/components/navigation/TabBarIcon';
 import { Colors } from '@/constants/Colors';
 import { useColorScheme } from '@/hooks/useColorScheme';
+import { useAuth } from '@clerk/clerk-expo';
 
 export default function TabLayout() {
   const colorScheme = useColorScheme();
+
+  const { isSignedIn } = useAuth()
+
+  if (!isSignedIn) {
+    console.log("asdfs")
+    return <Redirect href={'/sign-in'} />
+  }
 
   return (
     <Tabs
@@ -24,11 +32,11 @@ export default function TabLayout() {
         }}
       />
       <Tabs.Screen
-        name="explore"
+        name="settings"
         options={{
-          title: 'Explore',
+          title: 'Settings',
           tabBarIcon: ({ color, focused }) => (
-            <TabBarIcon name={focused ? 'code-slash' : 'code-slash-outline'} color={color} />
+            <TabBarIcon name={focused ? 'cog' : 'cog-outline'} color={color} />
           ),
         }}
       />

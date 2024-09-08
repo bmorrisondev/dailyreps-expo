@@ -16,7 +16,6 @@ export const listWithReps = query({
   args: {},
   handler: async (ctx) => {
     const auth = await ctx.auth.getUserIdentity()
-    console.log("auth", auth)
     let workouts = await ctx.db.query("workouts")
       .filter(q => q.eq(q.field("userId"), auth?.subject))
       .collect();
@@ -36,7 +35,6 @@ export const listWithReps = query({
       }
     })
 
-    console.log(workouts, reps)
     return workouts
   },
 });

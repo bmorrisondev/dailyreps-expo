@@ -1,8 +1,39 @@
 import { useSignIn } from '@clerk/clerk-expo'
 import { Link, useRouter } from 'expo-router'
-import { Text, TextInput, Button, View } from 'react-native'
+import { Text, TextInput, Button, View, StyleSheet } from 'react-native'
 import React from 'react'
 import OAuthButtons from '@/components/OAuthButtons'
+import { ThemedText } from '@/components/ThemedText';
+import { ThemedView } from '@/components/ThemedView';
+
+const styles = StyleSheet.create({
+  screen: {
+    padding: 10,
+    display: "flex",
+    gap: 8,
+  },
+  input: {
+    display: "flex",
+    marginBottom: 10,
+    padding: 8,
+    borderWidth: 1,
+    borderColor: "#555",
+    borderRadius: 3,
+  },
+  titleContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 8,
+    backgroundColor: "transparent",
+    justifyContent: "center",
+    marginBottom: 10
+  },
+  signUpText: {
+    color: "lightBlue",
+    backgroundColor: "transparent",
+    borderBottomWidth: 1
+  }
+});
 
 export default function Page() {
   const { signIn, setActive, isLoaded } = useSignIn()
@@ -35,9 +66,19 @@ export default function Page() {
     }
   }, [isLoaded, emailAddress, password])
 
+  if(!isLoaded) {
+    return (
+      <div>Loading...</div>
+    )
+  }
+
   return (
-    <View>
+    <View style={styles.screen}>
+      <ThemedView style={styles.titleContainer}>
+        <ThemedText type="title">Sign in</ThemedText>
+      </ThemedView>
       <TextInput
+        style={styles.input}
         autoCapitalize="none"
         value={emailAddress}
         placeholder="Email..."
@@ -45,6 +86,7 @@ export default function Page() {
       />
       <TextInput
         value={password}
+        style={styles.input}
         placeholder="Password..."
         secureTextEntry={true}
         onChangeText={(password) => setPassword(password)}
@@ -53,10 +95,10 @@ export default function Page() {
       <OAuthButtons />
       <View>
         <Text>Don't have an account?</Text>
-        <Link href="/sign-up">
-          <Text>Sign up</Text>
-        </Link>
       </View>
+      <Link href="/sign-up">
+        <Text style={styles.signUpText}>Sign up</Text>
+      </Link>
     </View>
   )
 }

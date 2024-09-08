@@ -51,12 +51,11 @@ export default function OAuthButtons() {
 const styles = StyleSheet.create({
   google: {
     display: "flex",
-    marginBottom: 10,
-    padding: 12,
+    padding: 8,
     alignItems: "center",
     borderWidth: 1,
     borderColor: "black",
-    borderRadius: 999,
+    borderRadius: 2,
     textAlign: "center",
   },
 });
