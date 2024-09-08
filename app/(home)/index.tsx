@@ -15,8 +15,17 @@ import LogRepsButton from '@/components/LogRepsButton';
 
 
 export default function HomeScreen() {
+  const start = new Date()
+  start.setHours(0,0,0,0)
+  const end = new Date()
+  end.setHours(23, 59, 59, 999)
 
-  const workouts = useQuery(api.workouts.listWithReps);
+  console.log(start, end, start.getTime(), end.getTime())
+
+  const workouts = useQuery(api.workouts.listWithReps, {
+    start: start.getTime(),
+    end: end.getTime()
+  });
 
   function onAddNewWorkoutPressed() {
     router.push("/new-workout")
