@@ -11,6 +11,8 @@ import React, { useState } from 'react';
 import { useUser } from '@clerk/clerk-expo';
 import Button from '../../components/ui/Button';
 import WorkoutHistoryList from '../../components/WorkoutHistoryList';
+import { FaAngleLeft, FaAngleRight } from "react-icons/fa";
+
 
 export default function Settings() {
   const [date, setDate] = useState(new Date())
@@ -36,11 +38,11 @@ export default function Settings() {
         </ThemedView>
         <ThemedView style={styles.dateNavRow}>
           <Button onPress={onPreviousDatePressed}>
-            lt
+            <FaAngleLeft />
           </Button>
           <div style={styles.date}>{date.toLocaleDateString()}</div>
           <Button onPress={onNextDatePressed}>
-            gt
+            <FaAngleRight />
           </Button>
         </ThemedView>
         <ThemedView style={styles.stepContainer}>
@@ -66,6 +68,10 @@ const styles = StyleSheet.create({
   date: {
     flex: 1,
     alignItems: "center",
+    display: "flex",
+    fontSize: 18,
+    fontWeight: "bold",
+    padding: 4
   },
   stepContainer: {
     gap: 8,
@@ -73,6 +79,6 @@ const styles = StyleSheet.create({
   },
   titleContainer: {
     flexDirection: 'row',
-    gap: 8,
+    gap: 8
   },
 });

@@ -19,7 +19,7 @@ type Props = {
   children: React.ReactNode
 }
 
-function Button({ onPress, children }) {
+function Button({ onPress, children }: Props) {
   return (
     <TouchableOpacity style={styles.button} onPress={onPress}>
       {children}
