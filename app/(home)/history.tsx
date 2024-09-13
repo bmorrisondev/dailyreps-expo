@@ -1,5 +1,5 @@
 import Ionicons from '@expo/vector-icons/Ionicons';
-import { StyleSheet, Image, Platform } from 'react-native';
+import { StyleSheet, Image, Platform, Text } from 'react-native';
 
 import { Collapsible } from '@/components/Collapsible';
 import { ExternalLink } from '@/components/ExternalLink';
@@ -11,7 +11,7 @@ import React, { useState } from 'react';
 import { useUser } from '@clerk/clerk-expo';
 import Button from '../../components/ui/Button';
 import WorkoutHistoryList from '../../components/WorkoutHistoryList';
-import { FaAngleLeft, FaAngleRight } from "react-icons/fa";
+// import { FaAngleLeft, FaAngleRight } from "react-icons/fa";
 
 
 export default function Settings() {
@@ -38,11 +38,11 @@ export default function Settings() {
         </ThemedView>
         <ThemedView style={styles.dateNavRow}>
           <Button onPress={onPreviousDatePressed}>
-            <FaAngleLeft />
+            <Text>L</Text>
           </Button>
-          <div style={styles.date}>{date.toLocaleDateString()}</div>
+          <Text style={styles.date}>{date.toLocaleDateString()}</Text>
           <Button onPress={onNextDatePressed}>
-            <FaAngleRight />
+            <Text>R</Text>
           </Button>
         </ThemedView>
         <ThemedView style={styles.stepContainer}>
