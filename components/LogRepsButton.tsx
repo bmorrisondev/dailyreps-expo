@@ -26,7 +26,7 @@ function LogRepsButton({ id, name, currentReps, targetReps, onPress }: Props) {
       style={styles.pressable}
       onPress={() => onPress(id)}
     >
-      <View style={styles.button}>
+      <View style={styles.inner}>
         <Text>{name} ({progressStr})</Text>
         <ProgressBar reps={currentReps} targetReps={targetReps} />
       </View>
@@ -43,12 +43,12 @@ const styles = StyleSheet.create({
     padding: 12,
     marginTop: 8,
     borderColor: "#ddd",
-    borderWidth: 1
-  },
-  button: {
+    borderWidth: 1,
     color: "#111",
     fontSize: 14,
-    fontWeight: "bold",
+    fontWeight: "bold"
+  },
+  inner: {
     display: "flex",
     gap: 3,
     flexDirection: "column"

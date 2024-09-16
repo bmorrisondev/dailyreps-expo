@@ -85,6 +85,8 @@ export const listWithRepsForHistory = query({
       }
     })
 
+    workouts = workouts.filter(w => w.isDeleted !== true || w.loggedRepEntries !== undefined);
+
     return workouts
   },
 });

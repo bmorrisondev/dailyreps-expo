@@ -1,16 +1,19 @@
 import { useSignIn } from '@clerk/clerk-expo'
 import { Link, useRouter } from 'expo-router'
-import { Text, TextInput, Button, View, StyleSheet, ActivityIndicator } from 'react-native'
+import { Text, TextInput, View, StyleSheet, ActivityIndicator } from 'react-native'
 import React from 'react'
 import OAuthButtons from '@/components/OAuthButtons'
 import { ThemedText } from '@/components/ThemedText';
 import { ThemedView } from '@/components/ThemedView';
+import ThemedTextInput from '@/components/ui/ThemedTextInput'
+import Button from '@/components/ui/Button'
 
 const styles = StyleSheet.create({
   screen: {
     padding: 10,
     display: "flex",
     gap: 8,
+    backgroundColor: "white"
   },
   input: {
     display: "flex",
@@ -72,21 +75,23 @@ export default function Page() {
 
   return (
     <View style={styles.screen}>
-      <TextInput
+      <ThemedTextInput
         style={styles.input}
         autoCapitalize="none"
         value={emailAddress}
         placeholder="Email..."
         onChangeText={(emailAddress) => setEmailAddress(emailAddress)}
       />
-      <TextInput
+      <ThemedTextInput
         value={password}
         style={styles.input}
         placeholder="Password..."
         secureTextEntry={true}
         onChangeText={(password) => setPassword(password)}
       />
-      <Button title="Sign In" onPress={onSignInPress} />
+      <Button onPress={onSignInPress}>
+        <Text>Sign in</Text>
+      </Button>
       <OAuthButtons />
       <View>
         <Text>Don't have an account?</Text>

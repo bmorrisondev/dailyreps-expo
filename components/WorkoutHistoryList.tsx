@@ -3,7 +3,8 @@ import { useQuery } from 'convex/react'
 import { api } from '@/convex/_generated/api';
 import { ThemedView } from "@/components/ThemedView"
 import { ThemedText } from "@/components/ThemedText"
-import { ActivityIndicator, StyleSheet, Text } from 'react-native';
+import { ActivityIndicator, StyleSheet, Text, View } from 'react-native';
+import Button from './ui/Button';
 
 const styles = StyleSheet.create({
   headerImage: {
@@ -30,6 +31,11 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     gap: 8,
   },
+  entryListWrapper: {
+    display: "flex",
+    flexDirection: "column",
+    gap: 8
+  }
 });
 
 type Props = {
@@ -47,6 +53,10 @@ function WorkoutHistoryList({ date }: Props) {
     end: end.getTime()
   });
 
+  function onRepEntryPressed() {
+
+  }
+
   if(!workouts) {
     return <ActivityIndicator size="large" />
   }
@@ -55,13 +65,15 @@ function WorkoutHistoryList({ date }: Props) {
     <>
       {workouts.map(wo =>
         <ThemedView key={wo._id} style={styles.stepContainer}>
-          <ThemedText type="defaultSemiBold">{wo.name}</ThemedText>
+          <ThemedText type="subtitle">{wo.name}</ThemedText>
           {!wo.loggedRepEntries ? <ThemedText> No reps logged. </ThemedText> : (
-            <Text>
+            <View style={styles.entryListWrapper}>
               {wo.loggedRepEntries.map((lre: any) => (
-                <Text key={lre._id}>{lre.reps} at {new Date(lre.timestamp).toLocaleTimeString()}</Text>
+                <Button key={lre._id} onPress={onRepEntryPressed}>
+                  <Text>{lre.reps} at {new Date(lre.timestamp).toLocaleTimeString()}</Text>
+                </Button>
               ))}
-            </Text>
+            </View>
           )}
         </ThemedView>
       )}

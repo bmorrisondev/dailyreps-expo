@@ -12,6 +12,7 @@ import { useUser } from '@clerk/clerk-expo';
 import { useQuery } from 'convex/react';
 import { api } from '@/convex/_generated/api';
 import { router } from 'expo-router';
+import Button from '@/components/ui/Button';
 
 export default function Settings() {
   const { user } = useUser()
@@ -37,13 +38,12 @@ export default function Settings() {
         {!workouts ? <ActivityIndicator size="large" /> : (
           <ThemedView style={styles.workoutList}>
             {workouts.map(w => (
-              <Pressable
-                style={styles.workoutListItem}
+              <Button
                 onPress={() => onEditWorkoutClicked(w._id)}>
                 <Text>
                   {w.name}
                 </Text>
-              </Pressable>
+              </Button>
             ))}
           </ThemedView>
         )}

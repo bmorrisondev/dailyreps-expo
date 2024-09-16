@@ -5,6 +5,7 @@ import { useOAuth } from "@clerk/clerk-expo";
 import { Platform } from "react-native";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import * as Linking from "expo-linking";
+import Button from "./ui/Button";
 
 WebBrowser.maybeCompleteAuthSession();
 
@@ -39,23 +40,11 @@ export default function OAuthButtons() {
   }, []);
 
   return (
-    <TouchableOpacity style={styles.google} onPress={onPress}>
+    <Button onPress={onPress}>
       <Text>
         <MaterialCommunityIcons name="google" size={18} color="black" />{" "}
         Continue with Google
       </Text>
-    </TouchableOpacity>
+    </Button>
   );
 }
-
-const styles = StyleSheet.create({
-  google: {
-    display: "flex",
-    padding: 8,
-    alignItems: "center",
-    borderWidth: 1,
-    borderColor: "black",
-    borderRadius: 2,
-    textAlign: "center",
-  },
-});

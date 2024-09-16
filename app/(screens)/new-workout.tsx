@@ -8,6 +8,8 @@ import { useMutation } from 'convex/react';
 import { api } from '@/convex/_generated/api';
 import { useState } from 'react';
 import { router }  from 'expo-router';
+import ThemedTextInput from '@/components/ui/ThemedTextInput';
+import Button from '@/components/ui/Button';
 
 function NewWorkout() {
   const [name, setName] = useState('');
@@ -34,16 +36,16 @@ function NewWorkout() {
       }>
       <SignedIn>
         <ThemedView style={styles.stepContainer}>
-          <TextInput
+          <Text>Name</Text>
+          <ThemedTextInput
             value={name}
-            onChangeText={setName}
-            style={styles.input} />
-          <TextInput
+            onChangeText={setName} />
+          <Text>Target reps</Text>
+          <ThemedTextInput
             keyboardType='numeric'
             value={targetReps}
-            onChangeText={setTargetReps}
-            style={styles.input} />
-          <Pressable
+            onChangeText={setTargetReps} />
+          <Button
             style={{
               borderRadius: 5,
               backgroundColor: "#eeeeee",
@@ -56,7 +58,7 @@ function NewWorkout() {
             <Text style={{ color: "#111", fontSize: 14, fontWeight: "bold" }}>
               Save
             </Text>
-          </Pressable>
+          </Button>
         </ThemedView>
       </SignedIn>
     </ParallaxScrollView>

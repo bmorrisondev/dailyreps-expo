@@ -8,6 +8,38 @@ import React, { useState } from 'react';
 import Button from '../../components/ui/Button';
 import WorkoutHistoryList from '../../components/WorkoutHistoryList';
 
+const styles = StyleSheet.create({
+  headerImage: {
+    color: '#808080',
+    bottom: -90,
+    left: -35,
+    position: 'absolute',
+  },
+  dateNavRow: {
+    gap: 8,
+    marginBottom: 8,
+    display: "flex",
+    flexDirection: "row",
+    alignItems: "center"
+  },
+  date: {
+    flex: 1,
+    alignItems: "center",
+    display: "flex",
+    fontSize: 18,
+    fontWeight: "bold",
+    padding: 4
+  },
+  stepContainer: {
+    gap: 8,
+    marginBottom: 8,
+  },
+  titleContainer: {
+    flexDirection: 'row',
+    gap: 8
+  },
+});
+
 export default function Settings() {
   const [date, setDate] = useState(new Date())
 
@@ -46,33 +78,3 @@ export default function Settings() {
   );
 }
 
-const styles = StyleSheet.create({
-  headerImage: {
-    color: '#808080',
-    bottom: -90,
-    left: -35,
-    position: 'absolute',
-  },
-  dateNavRow: {
-    gap: 8,
-    marginBottom: 8,
-    display: "flex",
-    flexDirection: "row",
-  },
-  date: {
-    flex: 1,
-    alignItems: "center",
-    display: "flex",
-    fontSize: 18,
-    fontWeight: "bold",
-    padding: 4
-  },
-  stepContainer: {
-    gap: 8,
-    marginBottom: 8,
-  },
-  titleContainer: {
-    flexDirection: 'row',
-    gap: 8
-  },
-});
