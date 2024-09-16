@@ -2,7 +2,9 @@
 // import { RepRecord, Workout, WorkoutTypeEnum } from '@/models'
 import { useEffect, useState } from 'react'
 import ProgressBar from './ProgressBar'
-import { Text, Pressable, StyleSheet } from 'react-native'
+import { Text, Pressable, StyleSheet, View } from 'react-native'
+import { ThemedText } from './ThemedText'
+import { ThemedView } from './ThemedView'
 
 type Props = {
   id: string,
@@ -17,27 +19,18 @@ function LogRepsButton({ id, name, currentReps, targetReps, onPress }: Props) {
 
   useEffect(() => {
     setProgressStr(`${currentReps}/${targetReps}`)
-    // if (workout.type === WorkoutTypeEnum.Count) {
-    //   setProgressStr(`${currentReps}/${workout.targetreps}`)
-    // } else {
-    //   setProgressStr(`${secondsToTimestamp(currentReps)}/${secondsToTimestamp(workout.targetreps as number)}`)
-    // }
-  }, [])
+  }, [currentReps, targetReps])
 
   return (
     <Pressable
       style={styles.pressable}
       onPress={() => onPress(id)}
     >
-      <Text style={styles.button}>
-        {name} ({progressStr})
+      <View style={styles.button}>
+        <Text>{name} ({progressStr})</Text>
         <ProgressBar reps={currentReps} targetReps={targetReps} />
-      </Text>
+      </View>
     </Pressable>
-    // <Button variant='secondary' className='w-full flex flex-col'>
-    //   {name} ({progressStr})
-    //   <ProgressBar reps={currentReps} targetReps={targetReps} />
-    // </Button>
   )
 }
 

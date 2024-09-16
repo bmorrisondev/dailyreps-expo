@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "dailyreps-expo",
-    "slug": "dailyreps-expo",
+    "name": "dailyreps-expo-debug",
+    "slug": "dailyreps-expo-debug",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",

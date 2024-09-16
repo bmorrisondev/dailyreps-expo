@@ -1,16 +1,16 @@
 import * as SecureStore from 'expo-secure-store'
 import { DarkTheme, DefaultTheme, ThemeProvider } from '@react-navigation/native';
 import { useFonts } from 'expo-font';
-import { Link, Stack } from 'expo-router';
+import { Stack } from 'expo-router';
 import * as SplashScreen from 'expo-splash-screen';
 import { useEffect } from 'react';
 import 'react-native-reanimated';
 
 import { useColorScheme } from '@/hooks/useColorScheme';
+import { ConvexReactClient } from 'convex/react';
 import { ClerkLoaded, ClerkProvider, SignedIn, SignedOut, useAuth } from '@clerk/clerk-expo';
-import { ConvexProvider, ConvexReactClient } from "convex/react";
 import { ConvexProviderWithClerk } from "convex/react-clerk";
-import { Text } from 'react-native'
+
 
 const publishableKey = process.env.EXPO_PUBLIC_CLERK_PUBLISHABLE_KEY!
 const convex = new ConvexReactClient(process.env.EXPO_PUBLIC_CONVEX_URL!, {
@@ -71,22 +71,24 @@ export default function RootLayout() {
     <ClerkProvider tokenCache={tokenCache} publishableKey={publishableKey}>
       <ConvexProviderWithClerk client={convex} useAuth={useAuth}>
         <ClerkLoaded>
-          <SignedOut>
-            <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
-              <Stack>
-                <Stack.Screen name="(auth)" options={{ headerShown: false }} />
-                <Stack.Screen name="+not-found" />
-              </Stack>
-            </ThemeProvider>
-          </SignedOut>
-          <SignedIn>
-            <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
-              <Stack>
-                <Stack.Screen name="(home)" options={{ headerShown: false }} />
-                <Stack.Screen name="+not-found" />
-              </Stack>
-            </ThemeProvider>
-          </SignedIn>
+          <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
+            <Stack>
+              <Stack.Screen name="(home)" options={{
+                headerShown: false,
+                title: "Home"
+              }} />
+              <Stack.Screen name="(auth)" options={{
+                headerShown: false
+              }} />
+              <Stack.Screen name="(screens)/new-workout" options={{
+                title: "New workout"
+              }} />
+              <Stack.Screen name="(screens)/log/[workoutId]" options={{
+                title: "Log reps"
+              }} />
+              <Stack.Screen name="+not-found" />
+            </Stack>
+          </ThemeProvider>
         </ClerkLoaded>
       </ConvexProviderWithClerk>
     </ClerkProvider>

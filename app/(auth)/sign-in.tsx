@@ -1,6 +1,6 @@
 import { useSignIn } from '@clerk/clerk-expo'
 import { Link, useRouter } from 'expo-router'
-import { Text, TextInput, Button, View, StyleSheet } from 'react-native'
+import { Text, TextInput, Button, View, StyleSheet, ActivityIndicator } from 'react-native'
 import React from 'react'
 import OAuthButtons from '@/components/OAuthButtons'
 import { ThemedText } from '@/components/ThemedText';
@@ -67,16 +67,11 @@ export default function Page() {
   }, [isLoaded, emailAddress, password])
 
   if(!isLoaded) {
-    return (
-      <div>Loading...</div>
-    )
+    return <ActivityIndicator size="large" />
   }
 
   return (
     <View style={styles.screen}>
-      <ThemedView style={styles.titleContainer}>
-        <ThemedText type="title">Sign in</ThemedText>
-      </ThemedView>
       <TextInput
         style={styles.input}
         autoCapitalize="none"

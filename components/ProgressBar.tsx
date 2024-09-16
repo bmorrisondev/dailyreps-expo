@@ -1,5 +1,6 @@
 import React from 'react'
-import { StyleSheet } from "react-native";
+import { StyleSheet, View } from "react-native";
+import { ThemedText } from './ThemedText';
 
 type Props = {
   reps: number
@@ -9,15 +10,13 @@ type Props = {
 function ProgressBar({ reps, targetReps }: Props) {
   const w = reps / targetReps > 1 ? 100 : (reps / targetReps) * 100
   return (
-    <div style={styles.outer}>
-      &nbsp;
-      <div style={{
+    <View style={styles.outer}>
+      <View style={{
           ...styles.inner,
           width: `${w}%`
         }}>
-        &nbsp;
-      </div>
-    </div>
+      </View>
+    </View>
   )
 }
 

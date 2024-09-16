@@ -1,19 +1,81 @@
 
-import React from 'react'
-import { useLocalSearchParams } from 'expo-router';
-import { useQuery } from 'convex/react';
+import React, { useEffect, useState } from 'react'
+import { router, useLocalSearchParams } from 'expo-router';
+import { useMutation, useQuery } from 'convex/react';
 import { api } from '@/convex/_generated/api';
+import { ActivityIndicator, Text, View } from 'react-native';
+import { ThemedView } from '@/components/ThemedView';
+import { ThemedText } from '@/components/ThemedText';
+import ThemedTextInput from '@/components/ui/ThemedTextInput';
+import ThemedScreen from '@/components/ui/ThemedScreen';
+import Button from '@/components/ui/Button';
 
 function Workout() {
   const local = useLocalSearchParams();
+  const [name, setName] = useState("")
+  const [targetReps, setTargetReps] = useState("10")
+
   const workout = useQuery(api.workouts.getWorkout, {
     id: local.workoutId as string
   })
+  const updateWorkout = useMutation(api.workouts.update)
+  const setIsDeleted = useMutation(api.workouts.setIsDeleted)
+
+  useEffect(() => {
+    if(workout) {
+      setName(workout.name)
+      setTargetReps(workout.targetReps.toString())
+    }
+  }, [workout])
+
+  async function onSavePressed() {
+    await updateWorkout({
+      id: local.workoutId as string,
+      name,
+      targetReps: Number(targetReps)
+    })
+    router.back()
+  }
+
+  async function onDeletePressed() {
+    await setIsDeleted({
+      id: local.workoutId as string,
+      isDeleted: true
+    })
+    router.back()
+  }
 
   return (
-    <div>
-      Workout: {JSON.stringify(workout)}
-    </div>
+    <ThemedScreen>
+      {!workout ? <ActivityIndicator size="large" /> : (
+        <ThemedView>
+          <ThemedView>
+            <ThemedText type="title">
+              {workout.name}
+            </ThemedText>
+          </ThemedView>
+          <ThemedView style={{
+            display: "flex",
+            flexDirection: "column",
+            gap: 8
+          }}>
+            <ThemedTextInput
+              value={name}
+              onChangeText={val => setName(val)} />
+            <ThemedTextInput
+              keyboardType='numeric'
+              value={targetReps}
+              onChangeText={val => setTargetReps(val)} />
+            <Button onPress={onSavePressed}>
+              <Text>Save</Text>
+            </Button>
+            <Button onPress={onDeletePressed}>
+              <Text>Delete</Text>
+            </Button>
+          </ThemedView>
+        </ThemedView>
+      )}
+    </ThemedScreen>
   )
 }
 

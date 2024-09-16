@@ -3,8 +3,6 @@ import { TextInput, Button, View } from 'react-native'
 import { useSignUp } from '@clerk/clerk-expo'
 import { useRouter } from 'expo-router'
 import { styles } from './styles'
-import { ThemedView } from '@/components/ThemedView'
-import { ThemedText } from '@/components/ThemedText'
 
 export default function SignUpScreen() {
   const { isLoaded, signUp, setActive } = useSignUp()
@@ -63,9 +61,6 @@ export default function SignUpScreen() {
     <View style={styles.screen}>
       {!pendingVerification && (
         <>
-          <ThemedView style={styles.titleContainer}>
-            <ThemedText type="title">Sign up</ThemedText>
-          </ThemedView>
           <TextInput
             autoCapitalize="none"
             value={emailAddress}

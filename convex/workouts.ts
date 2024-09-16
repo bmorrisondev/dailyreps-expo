@@ -7,7 +7,10 @@ export const list = query({
   handler: async (ctx) => {
     const auth = await ctx.auth.getUserIdentity()
     return await ctx.db.query("workouts")
-      .filter(q => q.eq(q.field("userId"), auth?.subject))
+      .filter(q => q.and(
+        q.eq(q.field("userId"), auth?.subject),
+        q.neq(q.field("isDeleted"), true)
+      ))
       .collect();
   },
 });
@@ -20,7 +23,10 @@ export const listWithReps = query({
   handler: async (ctx, args) => {
     const auth = await ctx.auth.getUserIdentity()
     let workouts = await ctx.db.query("workouts")
-      .filter(q => q.eq(q.field("userId"), auth?.subject))
+      .filter(q => q.and(
+        q.eq(q.field("userId"), auth?.subject),
+        q.neq(q.field("isDeleted"), true)
+      ))
       .collect();
 
     let reps = await Promise.all(
@@ -53,6 +59,9 @@ export const listWithRepsForHistory = query({
   },
   handler: async (ctx, args) => {
     const auth = await ctx.auth.getUserIdentity()
+    // TODO: get reps first to make sure I'm only getting the workouts for the reps for the day
+
+
     let workouts = await ctx.db.query("workouts")
       .filter(q => q.eq(q.field("userId"), auth?.subject))
       .collect();
@@ -97,6 +106,34 @@ export const getWorkout = query({
   }
 })
 
+export const update = mutation({
+  args: {
+    id: v.string(),
+    name: v.string(),
+    targetReps: v.number()
+  },
+  handler: async (ctx, args) => {
+    const auth = await ctx.auth.getUserIdentity()
+    if(!auth) {
+      throw new Error("Not authorized")
+    }
+
+    const wo = await ctx.db.query("workouts")
+      .filter(q => q.and(
+        q.eq(q.field("userId"), auth?.subject),
+        q.eq(q.field("_id"), args.id)
+      )).first();
+    if(!wo) {
+      throw new Error("Not authorized")
+    }
+
+    await ctx.db.patch(args.id as Id, {
+      name: args.name,
+      targetReps: args.targetReps
+    })
+  }
+})
+
 export const insert = mutation({
   args: {
     name: v.string(),
@@ -112,6 +149,31 @@ export const insert = mutation({
       name: args.name,
       targetReps: args.targetReps,
       userId: auth.subject
+    })
+  }
+})
+
+export const setIsDeleted = mutation({
+  args: {
+    id: v.string(),
+    isDeleted: v.boolean()
+  },
+  handler: async (ctx, args) => {
+    const auth = await ctx.auth.getUserIdentity()
+    if(!auth) {
+        throw new Error("Not authorized")
+    }
+    const wo = await ctx.db.query("workouts")
+      .filter(q => q.and(
+        q.eq(q.field("userId"), auth?.subject),
+        q.eq(q.field("_id"), args.id)
+      )).first();
+    if(!wo) {
+      throw new Error("Not authorized");
+    }
+
+    await ctx.db.patch(args.id as Id, {
+      isDeleted: args.isDeleted
     })
   }
 })

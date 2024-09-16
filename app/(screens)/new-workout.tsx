@@ -25,13 +25,13 @@ function NewWorkout() {
 
   return (
     <ParallaxScrollView
-    headerBackgroundColor={{ light: '#A1CEDC', dark: '#1D3D47' }}
-    headerImage={
-      <Image
-        source={require('@/assets/images/partial-react-logo.png')}
-        style={styles.reactLogo}
-      />
-    }>
+      headerBackgroundColor={{ light: '#A1CEDC', dark: '#1D3D47' }}
+      headerImage={
+        <Image
+          source={require('@/assets/images/partial-react-logo.png')}
+          style={styles.reactLogo}
+        />
+      }>
       <SignedIn>
         <ThemedView style={styles.stepContainer}>
           <TextInput
@@ -48,7 +48,6 @@ function NewWorkout() {
               borderRadius: 5,
               backgroundColor: "#eeeeee",
               padding: 12,
-              marginTop: 8,
               borderColor: "#ddd",
               borderWidth: 1
             }}
@@ -73,8 +72,7 @@ const styles = StyleSheet.create({
     gap: 8,
   },
   stepContainer: {
-    gap: 8,
-    marginBottom: 8,
+    gap: 12,
   },
   reactLogo: {
     height: 178,
@@ -85,9 +83,9 @@ const styles = StyleSheet.create({
   },
   input: {
     height: 40,
-    margin: 12,
     borderWidth: 1,
     padding: 10,
+    borderRadius: 5,
   },
   workoutRow: {
     display: "flex",

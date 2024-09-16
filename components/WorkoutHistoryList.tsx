@@ -3,7 +3,7 @@ import { useQuery } from 'convex/react'
 import { api } from '@/convex/_generated/api';
 import { ThemedView } from "@/components/ThemedView"
 import { ThemedText } from "@/components/ThemedText"
-import { StyleSheet } from 'react-native';
+import { ActivityIndicator, StyleSheet, Text } from 'react-native';
 
 const styles = StyleSheet.create({
   headerImage: {
@@ -48,16 +48,8 @@ function WorkoutHistoryList({ date }: Props) {
   });
 
   if(!workouts) {
-    return (
-      <div>Loading...</div>
-    )
+    return <ActivityIndicator size="large" />
   }
-
-  // return (
-  //   <div>
-  //     asdlkfjaslkdfjas
-  //   </div>
-  // )
 
   return (
     <>
@@ -65,11 +57,11 @@ function WorkoutHistoryList({ date }: Props) {
         <ThemedView key={wo._id} style={styles.stepContainer}>
           <ThemedText type="defaultSemiBold">{wo.name}</ThemedText>
           {!wo.loggedRepEntries ? <ThemedText> No reps logged. </ThemedText> : (
-            <ThemedText>
-              {wo.loggedRepEntries.map(lre => (
-                <div key={lre._id}>{lre.reps} at {new Date(lre.timestamp).toLocaleTimeString()}</div>
+            <Text>
+              {wo.loggedRepEntries.map((lre: any) => (
+                <Text key={lre._id}>{lre.reps} at {new Date(lre.timestamp).toLocaleTimeString()}</Text>
               ))}
-            </ThemedText>
+            </Text>
           )}
         </ThemedView>
       )}

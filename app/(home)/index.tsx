@@ -1,17 +1,13 @@
-import { Image, StyleSheet, Platform, TextInput, Pressable, NativeSyntheticEvent, TextInputKeyPressEventData } from 'react-native';
+import { Image, StyleSheet, Pressable, ActivityIndicator } from 'react-native';
 
-import { HelloWave } from '@/components/HelloWave';
 import ParallaxScrollView from '@/components/ParallaxScrollView';
-import { ThemedText } from '@/components/ThemedText';
 import { ThemedView } from '@/components/ThemedView';
-import { SignedIn, SignedOut, useUser } from '@clerk/clerk-expo';
-import { Link } from 'expo-router';
 import { Text } from 'react-native'
-import { useMutation, useQuery } from 'convex/react';
+import { useQuery } from 'convex/react';
 import { api } from '@/convex/_generated/api';
-import { useState } from 'react';
 import { router }  from 'expo-router';
 import LogRepsButton from '@/components/LogRepsButton';
+// import LogRepsButton from '@/components/LogRepsButton';
 
 
 export default function HomeScreen() {
@@ -44,38 +40,36 @@ export default function HomeScreen() {
           style={styles.reactLogo}
         />
       }>
-      <SignedIn>
-        <ThemedView style={styles.stepContainer}>
-          {!workouts ? <div>loading...</div> : (
-            <>
-              <Pressable
-              style={{
-                borderRadius: 5,
-                backgroundColor: "#eeeeee",
-                padding: 12,
-                marginTop: 8,
-                borderColor: "#ddd",
-                borderWidth: 1
-              }}
-              onPress={onAddNewWorkoutPressed}
-            >
-              <Text style={{ color: "#111", fontSize: 14, fontWeight: "bold" }}>
-                + New workout
-              </Text>
-            </Pressable>
-            {workouts.map(({ _id, name, currentReps, targetReps }) => (
-              <LogRepsButton key={_id}
-                id={_id}
-                name={name}
-                currentReps={currentReps ?? 0}
-                targetReps={targetReps ?? 0}
-                onPress={onLogRepsPressed} />
-            ))}
-            </>
-          )}
+      <ThemedView style={styles.stepContainer}>
+        {!workouts ? <ActivityIndicator size="large" /> : (
+          <>
+            <Pressable
+            style={{
+              borderRadius: 5,
+              backgroundColor: "#eeeeee",
+              padding: 12,
+              marginTop: 8,
+              borderColor: "#ddd",
+              borderWidth: 1
+            }}
+            onPress={onAddNewWorkoutPressed}
+          >
+            <Text style={{ color: "#111", fontSize: 14, fontWeight: "bold" }}>
+              + New workout
+            </Text>
+          </Pressable>
+          {workouts.map(({ _id, name, currentReps, targetReps }) => (
+            <LogRepsButton key={_id}
+              id={_id}
+              name={name}
+              currentReps={currentReps ?? 0}
+              targetReps={targetReps ?? 0}
+              onPress={onLogRepsPressed} />
+          ))}
+          </>
+        )}
 
-        </ThemedView>
-      </SignedIn>
+      </ThemedView>
     </ParallaxScrollView>
   );
 }

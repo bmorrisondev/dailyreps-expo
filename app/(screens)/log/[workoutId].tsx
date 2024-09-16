@@ -1,13 +1,10 @@
-import { Image, StyleSheet, Platform, TextInput, Pressable, NativeSyntheticEvent, TextInputKeyPressEventData } from 'react-native';
+import { Image, StyleSheet, TextInput, Pressable } from 'react-native';
 
-import { HelloWave } from '@/components/HelloWave';
 import ParallaxScrollView from '@/components/ParallaxScrollView';
-import { ThemedText } from '@/components/ThemedText';
 import { ThemedView } from '@/components/ThemedView';
-import { SignedIn, SignedOut, useUser } from '@clerk/clerk-expo';
-import { Link, useLocalSearchParams, useNavigation } from 'expo-router';
+import { SignedIn } from '@clerk/clerk-expo';
+import { useLocalSearchParams } from 'expo-router';
 import { Text } from 'react-native'
-import SignOutButton from '@/components/SignOutButton';
 import { useMutation, useQuery } from 'convex/react';
 import { api } from '@/convex/_generated/api';
 import { useState } from 'react';
@@ -27,7 +24,7 @@ function LogReps() {
       workoutId: local.workoutId as string,
       reps: Number(reps)
     })
-    router.push(`/`)
+    router.back()
   }
 
   return (

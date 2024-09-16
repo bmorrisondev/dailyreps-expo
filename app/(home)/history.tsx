@@ -1,18 +1,12 @@
 import Ionicons from '@expo/vector-icons/Ionicons';
-import { StyleSheet, Image, Platform, Text } from 'react-native';
+import { StyleSheet, Text } from 'react-native';
 
-import { Collapsible } from '@/components/Collapsible';
-import { ExternalLink } from '@/components/ExternalLink';
 import ParallaxScrollView from '@/components/ParallaxScrollView';
 import { ThemedText } from '@/components/ThemedText';
 import { ThemedView } from '@/components/ThemedView';
-import SignOutButton from '@/components/SignOutButton';
 import React, { useState } from 'react';
-import { useUser } from '@clerk/clerk-expo';
 import Button from '../../components/ui/Button';
 import WorkoutHistoryList from '../../components/WorkoutHistoryList';
-// import { FaAngleLeft, FaAngleRight } from "react-icons/fa";
-
 
 export default function Settings() {
   const [date, setDate] = useState(new Date())
@@ -32,17 +26,17 @@ export default function Settings() {
   return (
     <ParallaxScrollView
       headerBackgroundColor={{ light: '#D0D0D0', dark: '#353636' }}
-      headerImage={<Ionicons size={310} name="code-slash" style={styles.headerImage} />}>
+      headerImage={<Ionicons size={310} name="calendar" style={styles.headerImage} />}>
         <ThemedView style={styles.titleContainer}>
-          <ThemedText type="subtitle">Workout history</ThemedText>
+          <ThemedText type="title">Workout history</ThemedText>
         </ThemedView>
         <ThemedView style={styles.dateNavRow}>
           <Button onPress={onPreviousDatePressed}>
-            <Text>L</Text>
+            <Ionicons size={18} name="caret-back" />
           </Button>
           <Text style={styles.date}>{date.toLocaleDateString()}</Text>
           <Button onPress={onNextDatePressed}>
-            <Text>R</Text>
+            <Ionicons size={18} name="caret-forward" />
           </Button>
         </ThemedView>
         <ThemedView style={styles.stepContainer}>
