@@ -67,7 +67,9 @@ export default function Settings() {
             <Ionicons size={18} name="caret-back" />
           </Button>
           <Text style={styles.date}>{date.toLocaleDateString()}</Text>
-          <Button onPress={onNextDatePressed}>
+          <Button
+            onPress={onNextDatePressed}
+            disabled={date.toLocaleDateString() === (new Date()).toLocaleDateString()}>
             <Ionicons size={18} name="caret-forward" />
           </Button>
         </ThemedView>
