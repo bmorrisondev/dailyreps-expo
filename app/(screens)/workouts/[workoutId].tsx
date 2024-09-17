@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react'
 import { router, useLocalSearchParams } from 'expo-router';
 import { useMutation, useQuery } from 'convex/react';
 import { api } from '@/convex/_generated/api';
-import { ActivityIndicator, Text, View } from 'react-native';
+import { ActivityIndicator, Alert, Text, View } from 'react-native';
 import { ThemedView } from '@/components/ThemedView';
 import { ThemedText } from '@/components/ThemedText';
 import ThemedTextInput from '@/components/ui/ThemedTextInput';
@@ -37,19 +37,34 @@ function Workout() {
     router.back()
   }
 
-  async function onDeletePressed() {
+  function onDeletePressed() {
+    Alert.alert('Confirm', 'Are you sure you want to delete this workout?', [
+      {
+        text: 'Cancel',
+        onPress: () => console.log('Cancel Pressed'),
+        style: 'cancel',
+      },
+      {
+        text: 'Delete',
+        onPress: onConfirmDeletePressed,
+        style: 'destructive'
+      },
+    ]);
+  }
+
+  async function onConfirmDeletePressed() {
+    router.back()
     await setIsDeleted({
       id: local.workoutId as string,
       isDeleted: true
     })
-    router.back()
   }
 
   return (
     <ThemedScreen>
       {!workout ? <ActivityIndicator size="large" /> : (
         <ThemedView>
-          <ThemedView>
+          <ThemedView style={{ marginBottom: 8 }}>
             <ThemedText type="title">
               {workout.name}
             </ThemedText>
@@ -59,9 +74,11 @@ function Workout() {
             flexDirection: "column",
             gap: 8
           }}>
+            <Text>Name</Text>
             <ThemedTextInput
               value={name}
               onChangeText={val => setName(val)} />
+            <Text>Target reps</Text>
             <ThemedTextInput
               keyboardType='numeric'
               value={targetReps}

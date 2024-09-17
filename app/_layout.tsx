@@ -8,9 +8,8 @@ import 'react-native-reanimated';
 
 import { useColorScheme } from '@/hooks/useColorScheme';
 import { ConvexReactClient } from 'convex/react';
-import { ClerkLoaded, ClerkProvider, SignedIn, SignedOut, useAuth } from '@clerk/clerk-expo';
+import { ClerkLoaded, ClerkProvider, useAuth } from '@clerk/clerk-expo';
 import { ConvexProviderWithClerk } from "convex/react-clerk";
-
 
 const publishableKey = process.env.EXPO_PUBLIC_CLERK_PUBLISHABLE_KEY!
 const convex = new ConvexReactClient(process.env.EXPO_PUBLIC_CONVEX_URL!, {
@@ -85,6 +84,12 @@ export default function RootLayout() {
               }} />
               <Stack.Screen name="(screens)/log/[workoutId]" options={{
                 title: "Log reps"
+              }} />
+              <Stack.Screen name="(screens)/workouts/[workoutId]" options={{
+                title: "Edit workout"
+              }} />
+              <Stack.Screen name="(screens)/edit-entry/[entryId]" options={{
+                title: "Edit entry"
               }} />
               <Stack.Screen name="+not-found" />
             </Stack>

@@ -2,6 +2,12 @@ import { v } from "convex/values";
 import { mutation, query } from "./_generated/server";
 import { Id } from "./_generated/dataModel";
 
+export type Workout = {
+  _id: string,
+  name: string,
+  targetReps: number
+}
+
 export const list = query({
   args: {},
   handler: async (ctx) => {
@@ -240,3 +246,4 @@ export const getWorkoutById = query({
     return await ctx.db.get(args.id as Id)
   }
 })
+

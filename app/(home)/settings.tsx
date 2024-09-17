@@ -39,6 +39,7 @@ export default function Settings() {
           <ThemedView style={styles.workoutList}>
             {workouts.map(w => (
               <Button
+                key={w._id}
                 onPress={() => onEditWorkoutClicked(w._id)}>
                 <Text>
                   {w.name}
