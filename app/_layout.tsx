@@ -80,16 +80,31 @@ export default function RootLayout() {
                 headerShown: false
               }} />
               <Stack.Screen name="(screens)/new-workout" options={{
-                title: "New workout"
+                title: "New workout",
+                contentStyle: {
+                  backgroundColor: "white"
+                }
               }} />
               <Stack.Screen name="(screens)/log/[workoutId]" options={{
-                title: "Log reps"
+                title: "Log reps",
+                contentStyle: {
+                  backgroundColor: "white",
+                  paddingTop: 8
+                }
               }} />
               <Stack.Screen name="(screens)/workouts/[workoutId]" options={{
-                title: "Edit workout"
+                title: "Edit workout",
+                contentStyle: {
+                  backgroundColor: "white",
+                  paddingTop: 8
+                }
               }} />
               <Stack.Screen name="(screens)/edit-entry/[entryId]" options={{
-                title: "Edit entry"
+                title: "Edit entry",
+                contentStyle: {
+                  backgroundColor: "white",
+                  paddingTop: 8
+                }
               }} />
               <Stack.Screen name="+not-found" />
             </Stack>

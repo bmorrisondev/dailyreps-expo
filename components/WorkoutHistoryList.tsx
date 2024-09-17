@@ -6,6 +6,7 @@ import { ThemedText } from "@/components/ThemedText"
 import { ActivityIndicator, StyleSheet, Text, View } from 'react-native';
 import Button from './ui/Button';
 import { router } from 'expo-router';
+import ListItem from './ListItem';
 
 const styles = StyleSheet.create({
   headerImage: {
@@ -70,9 +71,9 @@ function WorkoutHistoryList({ date }: Props) {
           {!wo.loggedRepEntries ? <ThemedText> No reps logged. </ThemedText> : (
             <View style={styles.entryListWrapper}>
               {wo.loggedRepEntries.map((lre: any) => (
-                <Button key={lre._id} onPress={() => onRepEntryPressed(lre._id)}>
+                <ListItem key={lre._id} onPress={() => onRepEntryPressed(lre._id)}>
                   <Text>{lre.reps} at {new Date(lre.timestamp).toLocaleTimeString()}</Text>
-                </Button>
+                </ListItem>
               ))}
             </View>
           )}

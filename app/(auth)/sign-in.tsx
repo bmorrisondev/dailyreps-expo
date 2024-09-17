@@ -2,11 +2,10 @@ import { useSignIn } from '@clerk/clerk-expo'
 import { Link, useRouter } from 'expo-router'
 import { Text, TextInput, View, StyleSheet, ActivityIndicator } from 'react-native'
 import React from 'react'
-import OAuthButtons from '@/components/OAuthButtons'
-import { ThemedText } from '@/components/ThemedText';
-import { ThemedView } from '@/components/ThemedView';
 import ThemedTextInput from '@/components/ui/ThemedTextInput'
 import Button from '@/components/ui/Button'
+import OAuthButton from '@/components/OAuthButton'
+import MaterialCommunityIcons from '@expo/vector-icons/build/MaterialCommunityIcons'
 
 const styles = StyleSheet.create({
   screen: {
@@ -76,7 +75,6 @@ export default function Page() {
   return (
     <View style={styles.screen}>
       <ThemedTextInput
-        style={styles.input}
         autoCapitalize="none"
         value={emailAddress}
         placeholder="Email..."
@@ -84,7 +82,6 @@ export default function Page() {
       />
       <ThemedTextInput
         value={password}
-        style={styles.input}
         placeholder="Password..."
         secureTextEntry={true}
         onChangeText={(password) => setPassword(password)}
@@ -92,7 +89,14 @@ export default function Page() {
       <Button onPress={onSignInPress}>
         <Text>Sign in</Text>
       </Button>
-      <OAuthButtons />
+      <OAuthButton strategy="oauth_google">
+        <MaterialCommunityIcons name="google" size={18} />{" "}
+        Continue with Google
+      </OAuthButton>
+      <OAuthButton strategy="oauth_github">
+        <MaterialCommunityIcons name="github" size={18} />{" "}
+        Continue with GitHub
+      </OAuthButton>
       <View>
         <Text>Don't have an account?</Text>
       </View>

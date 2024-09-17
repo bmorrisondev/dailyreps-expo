@@ -8,6 +8,7 @@ import { api } from '@/convex/_generated/api';
 import { router }  from 'expo-router';
 import LogRepsButton from '@/components/LogRepsButton';
 import Ionicons from '@expo/vector-icons/Ionicons';
+import Button from '@/components/ui/Button';
 // import LogRepsButton from '@/components/LogRepsButton';
 
 
@@ -40,21 +41,9 @@ export default function HomeScreen() {
       <ThemedView style={styles.stepContainer}>
         {!workouts ? <ActivityIndicator size="large" /> : (
           <>
-            <Pressable
-            style={{
-              borderRadius: 5,
-              backgroundColor: "#eeeeee",
-              padding: 12,
-              marginTop: 8,
-              borderColor: "#ddd",
-              borderWidth: 1
-            }}
-            onPress={onAddNewWorkoutPressed}
-          >
-            <Text style={{ color: "#111", fontSize: 14, fontWeight: "bold" }}>
-              + New workout
-            </Text>
-          </Pressable>
+          <Button onPress={onAddNewWorkoutPressed}>
+            <Ionicons size={16} name="add-outline" /> New workout
+          </Button>
           {workouts.map(({ _id, name, currentReps, targetReps }) => (
             <LogRepsButton key={_id}
               id={_id}

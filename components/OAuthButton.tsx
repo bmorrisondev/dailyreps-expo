@@ -7,9 +7,14 @@ import { MaterialCommunityIcons } from "@expo/vector-icons";
 import * as Linking from "expo-linking";
 import Button from "./ui/Button";
 
+type Props = {
+  strategy: string
+  children: React.ReactNode
+}
+
 WebBrowser.maybeCompleteAuthSession();
 
-export default function OAuthButtons() {
+export default function OAuthButton({ strategy, children }: Props) {
   // Warm up the android browser to improve UX
   // https://docs.expo.dev/guides/authentication/#improving-user-experience
   React.useEffect(() => {
@@ -23,7 +28,7 @@ export default function OAuthButtons() {
     };
   }, []);
 
-  const { startOAuthFlow } = useOAuth({ strategy: "oauth_google" });
+  const { startOAuthFlow } = useOAuth({ strategy});
 
   const onPress = React.useCallback(async () => {
     try {
@@ -41,10 +46,7 @@ export default function OAuthButtons() {
 
   return (
     <Button onPress={onPress}>
-      <Text>
-        <MaterialCommunityIcons name="google" size={18} color="black" />{" "}
-        Continue with Google
-      </Text>
+      { children }
     </Button>
   );
 }

@@ -1,5 +1,6 @@
 import { Text, Pressable } from "react-native";
 import { useAuth } from "@clerk/clerk-expo";
+import Button from "./ui/Button";
 
 export default function SignOutButton() {
   const { signOut } = useAuth();
@@ -11,20 +12,8 @@ export default function SignOutButton() {
   };
 
   return (
-    <Pressable
-      style={{
-        borderRadius: 5,
-        backgroundColor: "#eeeeee",
-        padding: 12,
-        marginTop: 8,
-        borderColor: "#ddd",
-        borderWidth: 1
-      }}
-      onPress={onSignOutPress}
-    >
-      <Text style={{ color: "#111", fontSize: 14, fontWeight: "bold" }}>
-        Sign out
-      </Text>
-    </Pressable>
+    <Button onPress={onSignOutPress}>
+      Sign out
+    </Button>
   );
 }

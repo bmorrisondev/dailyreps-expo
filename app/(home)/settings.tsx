@@ -13,6 +13,7 @@ import { useQuery } from 'convex/react';
 import { api } from '@/convex/_generated/api';
 import { router } from 'expo-router';
 import Button from '@/components/ui/Button';
+import ListItem from '@/components/ListItem';
 
 export default function Settings() {
   const { user } = useUser()
@@ -38,13 +39,13 @@ export default function Settings() {
         {!workouts ? <ActivityIndicator size="large" /> : (
           <ThemedView style={styles.workoutList}>
             {workouts.map(w => (
-              <Button
+              <ListItem
                 key={w._id}
                 onPress={() => onEditWorkoutClicked(w._id)}>
                 <Text>
                   {w.name}
                 </Text>
-              </Button>
+              </ListItem>
             ))}
           </ThemedView>
         )}

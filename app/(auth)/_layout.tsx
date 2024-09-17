@@ -18,7 +18,10 @@ export default function AuthRoutesLayout() {
   return (
     <Tabs
       screenOptions={{
-        tabBarActiveTintColor: Colors[colorScheme ?? 'light'].tint,
+        tabBarActiveTintColor: Colors[colorScheme ?? 'light'].tint
+      }}
+      sceneContainerStyle={{
+        backgroundColor: "white"
       }}>
       <Tabs.Screen
         name="sign-in"

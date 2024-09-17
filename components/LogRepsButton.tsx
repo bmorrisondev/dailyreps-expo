@@ -1,10 +1,8 @@
 'use client'
-// import { RepRecord, Workout, WorkoutTypeEnum } from '@/models'
 import { useEffect, useState } from 'react'
 import ProgressBar from './ProgressBar'
-import { Text, Pressable, StyleSheet, View } from 'react-native'
-import { ThemedText } from './ThemedText'
-import { ThemedView } from './ThemedView'
+import { Text } from 'react-native'
+import ListItem from './ListItem'
 
 type Props = {
   id: string,
@@ -22,35 +20,11 @@ function LogRepsButton({ id, name, currentReps, targetReps, onPress }: Props) {
   }, [currentReps, targetReps])
 
   return (
-    <Pressable
-      style={styles.pressable}
-      onPress={() => onPress(id)}
-    >
-      <View style={styles.inner}>
-        <Text>{name} ({progressStr})</Text>
-        <ProgressBar reps={currentReps} targetReps={targetReps} />
-      </View>
-    </Pressable>
+    <ListItem onPress={() => onPress(id)}>
+      <Text>{name} ({progressStr})</Text>
+      <ProgressBar reps={currentReps} targetReps={targetReps} />
+    </ListItem>
   )
 }
 
 export default LogRepsButton
-
-const styles = StyleSheet.create({
-  pressable: {
-    borderRadius: 5,
-    backgroundColor: "#eeeeee",
-    padding: 12,
-    marginTop: 8,
-    borderColor: "#ddd",
-    borderWidth: 1,
-    color: "#111",
-    fontSize: 14,
-    fontWeight: "bold"
-  },
-  inner: {
-    display: "flex",
-    gap: 3,
-    flexDirection: "column"
-  }
-})

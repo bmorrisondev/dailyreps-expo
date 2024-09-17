@@ -16,26 +16,34 @@ import { StyleSheet, Text } from 'react-native';
 // });
 
 const styles = StyleSheet.create({
-  buttonBak: {
-    display: "flex",
-    padding: 8,
-    alignItems: "center",
-    borderWidth: 1,
-    borderColor: "#999999",
-    borderRadius: 4,
-    textAlign: "center",
-    justifyContent: "center"
-  },
   button: {
-    borderRadius: 5,
-    backgroundColor: "#eeeeee",
-    padding: 12,
-    borderColor: "#ddd",
+    borderRadius: 6,
+    padding: 8,
+    // borderColor: "rgba(0, 0, 0, 0.2)",
+    backgroundColor: "rgb(47, 48, 55)",
+    borderColor: "rgb(47, 48, 55)",
     borderWidth: 1,
-    color: "#111",
     fontSize: 14,
-    fontWeight: "bold"
+    fontWeight: "bold",
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+    shadowColor: "rgba(0, 0, 0, 0.07)",
+    shadowOffset: {
+      height: 1,
+      width: 1
+    },
+    shadowRadius: 5
   },
+  text: {
+    color: "white",
+    fontWeight: "bold",
+    display: "flex",
+    gap: 2,
+    justifyContent: "center",
+    alignContent: "center",
+    alignItems: "center",
+  }
 });
 
 type Props = {
@@ -47,7 +55,9 @@ type Props = {
 function Button({ onPress, children }: Props) {
   return (
     <TouchableOpacity style={styles.button} onPress={onPress}>
-      {children}
+      <Text style={styles.text}>
+        { children }
+      </Text>
     </TouchableOpacity>
   )
 }

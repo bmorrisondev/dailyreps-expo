@@ -9,6 +9,10 @@ import { useMutation, useQuery } from 'convex/react';
 import { api } from '@/convex/_generated/api';
 import { useState } from 'react';
 import { router }  from 'expo-router';
+import Button from '@/components/ui/Button';
+import ThemedScreen from '@/components/ui/ThemedScreen';
+import { ThemedText } from '@/components/ThemedText';
+import ThemedTextInput from '@/components/ui/ThemedTextInput';
 
 function LogReps() {
   const local = useLocalSearchParams();
@@ -28,42 +32,20 @@ function LogReps() {
   }
 
   return (
-    <ParallaxScrollView
-      headerBackgroundColor={{ light: '#A1CEDC', dark: '#1D3D47' }}
-      headerImage={
-        <Image
-          source={require('@/assets/images/partial-react-logo.png')}
-          style={styles.reactLogo}
-        />
-      }>
-      <SignedIn>
-        <ThemedView style={styles.stepContainer}>
-          <Text style={{ color: "#111", fontSize: 14, fontWeight: "bold" }}>
-            Log reps for "{workout?.name}"
-          </Text>
-          <TextInput
-            keyboardType='numeric'
-            value={reps}
-            onChangeText={setReps}
-            style={styles.input} />
-          <Pressable
-            style={{
-              borderRadius: 5,
-              backgroundColor: "#eeeeee",
-              padding: 12,
-              marginTop: 8,
-              borderColor: "#ddd",
-              borderWidth: 1
-            }}
-            onPress={onAddNewWorkoutPressed}
-          >
-            <Text style={{ color: "#111", fontSize: 14, fontWeight: "bold" }}>
-              Save
-            </Text>
-          </Pressable>
-        </ThemedView>
-      </SignedIn>
-    </ParallaxScrollView>
+    <ThemedScreen>
+      <ThemedView style={styles.stepContainer}>
+        <ThemedText type="title">
+          {workout?.name}
+        </ThemedText>
+        <ThemedTextInput
+          keyboardType='numeric'
+          value={reps}
+          onChangeText={setReps} />
+        <Button onPress={onAddNewWorkoutPressed}>
+          Save
+        </Button>
+      </ThemedView>
+    </ThemedScreen>
   )
 }
 
