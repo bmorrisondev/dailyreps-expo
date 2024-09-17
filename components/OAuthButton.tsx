@@ -1,22 +1,18 @@
 import React from "react";
 import * as WebBrowser from "expo-web-browser";
-import { StyleSheet, Text, TouchableOpacity } from "react-native";
 import { useOAuth } from "@clerk/clerk-expo";
 import { Platform } from "react-native";
-import { MaterialCommunityIcons } from "@expo/vector-icons";
 import * as Linking from "expo-linking";
 import Button from "./ui/Button";
 
 type Props = {
-  strategy: string
+  strategy: string,
   children: React.ReactNode
 }
 
 WebBrowser.maybeCompleteAuthSession();
 
 export default function OAuthButton({ strategy, children }: Props) {
-  // Warm up the android browser to improve UX
-  // https://docs.expo.dev/guides/authentication/#improving-user-experience
   React.useEffect(() => {
     if (Platform.OS !== "android") return;
 
@@ -28,7 +24,8 @@ export default function OAuthButton({ strategy, children }: Props) {
     };
   }, []);
 
-  const { startOAuthFlow } = useOAuth({ strategy});
+  // TODO: Figure out how to type this properly
+  const { startOAuthFlow } = useOAuth({ strategy });
 
   const onPress = React.useCallback(async () => {
     try {

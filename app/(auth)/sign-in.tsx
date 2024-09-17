@@ -6,36 +6,10 @@ import ThemedTextInput from '@/components/ui/ThemedTextInput'
 import Button from '@/components/ui/Button'
 import OAuthButton from '@/components/OAuthButton'
 import MaterialCommunityIcons from '@expo/vector-icons/build/MaterialCommunityIcons'
-
-const styles = StyleSheet.create({
-  screen: {
-    padding: 10,
-    display: "flex",
-    gap: 8,
-    backgroundColor: "white"
-  },
-  input: {
-    display: "flex",
-    marginBottom: 10,
-    padding: 8,
-    borderWidth: 1,
-    borderColor: "#555",
-    borderRadius: 3,
-  },
-  titleContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    gap: 8,
-    backgroundColor: "transparent",
-    justifyContent: "center",
-    marginBottom: 10
-  },
-  signUpText: {
-    color: "lightBlue",
-    backgroundColor: "transparent",
-    borderBottomWidth: 1
-  }
-});
+import { ThemedText } from '@/components/ThemedText'
+import { ThemedView } from '@/components/ThemedView'
+import { styles } from "./styles"
+import { Ionicons } from '@expo/vector-icons'
 
 export default function Page() {
   const { signIn, setActive, isLoaded } = useSignIn()
@@ -56,11 +30,12 @@ export default function Page() {
       })
 
       if (signInAttempt.status === 'complete') {
-        await setActive({ session: signInAttempt.createdSessionId })
+        await setActive({
+          session: signInAttempt.createdSessionId
+        })
+
         router.replace('/')
       } else {
-        // See https://clerk.com/docs/custom-flows/error-handling
-        // for more info on error handling
         console.error(JSON.stringify(signInAttempt, null, 2))
       }
     } catch (err: any) {
@@ -74,35 +49,78 @@ export default function Page() {
 
   return (
     <View style={styles.screen}>
-      <ThemedTextInput
-        autoCapitalize="none"
-        value={emailAddress}
-        placeholder="Email..."
-        onChangeText={(emailAddress) => setEmailAddress(emailAddress)}
-      />
-      <ThemedTextInput
-        value={password}
-        placeholder="Password..."
-        secureTextEntry={true}
-        onChangeText={(password) => setPassword(password)}
-      />
-      <Button onPress={onSignInPress}>
-        <Text>Sign in</Text>
-      </Button>
-      <OAuthButton strategy="oauth_google">
-        <MaterialCommunityIcons name="google" size={18} />{" "}
-        Continue with Google
-      </OAuthButton>
-      <OAuthButton strategy="oauth_github">
-        <MaterialCommunityIcons name="github" size={18} />{" "}
-        Continue with GitHub
-      </OAuthButton>
-      <View>
-        <Text>Don't have an account?</Text>
+      <View style={styles.form}>
+        <ThemedView style={{ marginVertical: 16, alignItems: "center" }}>
+          <ThemedText type='title'>
+            Sign into Daily Reps
+          </ThemedText>
+          <ThemedText type='default'>
+            Welcome back! Please sign in to continue
+          </ThemedText>
+        </ThemedView>
+
+        <View style={{
+          display: "flex",
+          flexDirection: "row",
+          gap: 8
+        }}>
+          <View style={{ flex: 1 }}>
+            <OAuthButton strategy="oauth_google">
+              <MaterialCommunityIcons name="google" size={18} />{" "}
+              Google
+            </OAuthButton>
+          </View>
+          <View style={{ flex: 1 }}>
+            <OAuthButton strategy="oauth_github">
+              <MaterialCommunityIcons name="github" size={18} />{" "}
+              GitHub
+            </OAuthButton>
+          </View>
+        </View>
+
+        <View style={{flexDirection: 'row', alignItems: 'center'}}>
+          <View style={{flex: 1, height: 1, backgroundColor: '#eee'}} />
+          <View>
+            <Text style={{width: 50, textAlign: 'center', color: "#555"}}>or</Text>
+          </View>
+          <View style={{flex: 1, height: 1, backgroundColor: '#eee'}} />
+        </View>
+
+        <View style={{ gap: 8, marginBottom: 24 }}>
+          <Text>Email address</Text>
+          <ThemedTextInput
+            autoCapitalize="none"
+            value={emailAddress}
+            placeholder="Email..."
+            onChangeText={(emailAddress) => setEmailAddress(emailAddress)}
+          />
+          <Text>Password</Text>
+          <ThemedTextInput
+            value={password}
+            placeholder="Password..."
+            secureTextEntry={true}
+            onChangeText={(password) => setPassword(password)}
+          />
+        </View>
+
+        <Button onPress={onSignInPress}>
+          <Text>Sign in</Text> <Ionicons name='caret-forward' />
+        </Button>
+
+        <View style={{
+          display: "flex",
+          flexDirection: "row",
+          gap: 4,
+          justifyContent: "center",
+          marginVertical: 18
+        }}>
+          <Text>Don't have an account?</Text>
+          <Link href="/sign-up">
+            <Text style={styles.signUpText}>Sign up</Text>
+          </Link>
+        </View>
+
       </View>
-      <Link href="/sign-up">
-        <Text style={styles.signUpText}>Sign up</Text>
-      </Link>
     </View>
   )
 }

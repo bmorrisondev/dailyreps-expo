@@ -2,29 +2,21 @@ import { StyleSheet } from 'react-native'
 
 export const styles = StyleSheet.create({
   screen: {
-    padding: 10,
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    right: 0,
+    bottom: 0,
+    justifyContent: 'center',
+    alignItems: 'center'
+  },
+  form: {
+    padding: 18,
     display: "flex",
     gap: 8,
-  },
-  input: {
-    display: "flex",
-    marginBottom: 10,
-    padding: 8,
-    borderWidth: 1,
-    borderColor: "#555",
-    borderRadius: 3,
-  },
-  titleContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    gap: 8,
-    backgroundColor: "transparent",
-    justifyContent: "center",
-    marginBottom: 10
+    width: "100%"
   },
   signUpText: {
-    color: "lightBlue",
-    backgroundColor: "transparent",
-    borderBottomWidth: 1
+    fontWeight: "bold"
   }
 });

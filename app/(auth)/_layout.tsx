@@ -18,7 +18,8 @@ export default function AuthRoutesLayout() {
   return (
     <Tabs
       screenOptions={{
-        tabBarActiveTintColor: Colors[colorScheme ?? 'light'].tint
+        tabBarActiveTintColor: Colors[colorScheme ?? 'light'].tint,
+        headerShown: false
       }}
       sceneContainerStyle={{
         backgroundColor: "white"

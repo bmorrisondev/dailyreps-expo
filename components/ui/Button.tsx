@@ -40,10 +40,24 @@ type Props = {
   onPress: () => void
   children: React.ReactNode | string,
   disabled?: boolean
-  // style?: StyleProp<ViewStyle>
+  style?: StyleProp<ViewStyle>
 }
 
-function Button({ onPress, children, disabled }: Props) {
+function Button({ onPress, children, disabled, style }: Props) {
+  // let _style = styles.button
+  // if(disabled) {
+  //   _style = {
+  //     ..._style,
+  //     ...styles.disabled
+  //   }
+  // }
+
+  // if(style) {
+  //   _style = {
+  //     ..._style,
+  //     ...style
+  //   }
+  // }
 
   return (
     <TouchableOpacity
