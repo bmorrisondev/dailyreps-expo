@@ -8,7 +8,7 @@ import 'react-native-reanimated';
 
 import { useColorScheme } from '@/hooks/useColorScheme';
 import { ConvexReactClient } from 'convex/react';
-import { ClerkLoaded, ClerkProvider, useAuth } from '@clerk/clerk-expo';
+import { ClerkLoaded, ClerkProvider, SignedIn, SignedOut, useAuth } from '@clerk/clerk-expo';
 import { ConvexProviderWithClerk } from "convex/react-clerk";
 
 const publishableKey = process.env.EXPO_PUBLIC_CLERK_PUBLISHABLE_KEY!
@@ -71,43 +71,49 @@ export default function RootLayout() {
       <ConvexProviderWithClerk client={convex} useAuth={useAuth}>
         <ClerkLoaded>
           <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
-            <Stack>
-              <Stack.Screen name="(home)" options={{
-                headerShown: false,
-                title: "Home"
-              }} />
-              <Stack.Screen name="(auth)" options={{
-                headerShown: false
-              }} />
-              <Stack.Screen name="(screens)/new-workout" options={{
-                title: "New workout",
-                contentStyle: {
-                  backgroundColor: "white"
-                }
-              }} />
-              <Stack.Screen name="(screens)/log/[workoutId]" options={{
-                title: "Log reps",
-                contentStyle: {
-                  backgroundColor: "white",
-                  paddingTop: 8
-                }
-              }} />
-              <Stack.Screen name="(screens)/workouts/[workoutId]" options={{
-                title: "Edit workout",
-                contentStyle: {
-                  backgroundColor: "white",
-                  paddingTop: 8
-                }
-              }} />
-              <Stack.Screen name="(screens)/edit-entry/[entryId]" options={{
-                title: "Edit entry",
-                contentStyle: {
-                  backgroundColor: "white",
-                  paddingTop: 8
-                }
-              }} />
-              <Stack.Screen name="+not-found" />
-            </Stack>
+            <SignedIn>
+              <Stack>
+                <Stack.Screen name="(home)" options={{
+                  headerShown: false,
+                  title: "Home"
+                }} />
+                <Stack.Screen name="(screens)/new-workout" options={{
+                  title: "New workout",
+                  contentStyle: {
+                    backgroundColor: "white"
+                  }
+                }} />
+                <Stack.Screen name="(screens)/log/[workoutId]" options={{
+                  title: "Log reps",
+                  contentStyle: {
+                    backgroundColor: "white",
+                    paddingTop: 8
+                  }
+                }} />
+                <Stack.Screen name="(screens)/workouts/[workoutId]" options={{
+                  title: "Edit workout",
+                  contentStyle: {
+                    backgroundColor: "white",
+                    paddingTop: 8
+                  }
+                }} />
+                <Stack.Screen name="(screens)/edit-entry/[entryId]" options={{
+                  title: "Edit entry",
+                  contentStyle: {
+                    backgroundColor: "white",
+                    paddingTop: 8
+                  }
+                }} />
+                <Stack.Screen name="+not-found" />
+              </Stack>
+            </SignedIn>
+            <SignedOut>
+              <Stack>
+                <Stack.Screen name="(auth)" options={{
+                  headerShown: false
+                }} />
+              </Stack>
+            </SignedOut>
           </ThemeProvider>
         </ClerkLoaded>
       </ConvexProviderWithClerk>

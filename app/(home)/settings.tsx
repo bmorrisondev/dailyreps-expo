@@ -11,6 +11,7 @@ import { useQuery } from 'convex/react';
 import { api } from '@/convex/_generated/api';
 import { router } from 'expo-router';
 import ListItem from '@/components/ListItem';
+import Button from '@/components/ui/Button';
 // import InAppBrowser from 'react-native-inappbrowser-reborn';
 
 
@@ -25,7 +26,35 @@ export default function Settings() {
     router.push(`/workouts/${id}`)
   }
 
-  function onManageProfilePressed() {
+  async function onManageProfilePressed() {
+    // console.log(clerk.client.signIn.supportedFirstFactors)
+    // console.log(clerk.client.signIn.supportedSecondFactors)
+
+    // const url = 'https://immortal-grizzly-78.clerk.accounts.dev/v1/client/handshake?redirect_url=https%3A%2F%2Fcooking-with-clerk.vercel.app%2Fsign-in'
+    // const xhttp = new XMLHttpRequest();
+    // xhttp = function () {
+    //   console.log('progress')
+    // }
+    // xhttp.onreadystatechange = function() {
+    //   // console.log('hit', xhttp.status, xhttp.responseText)
+    //   if (this.readyState == 4 && this.status == 200) {
+    //     // Typical action to be performed when the document is ready:
+    //     console.log("DONE", xhttp.responseURL);
+    //   }
+    // };
+    // xhttp.open("GET", url, true);
+    // xhttp.send();
+
+    // const res = await fetch('https://immortal-grizzly-78.clerk.accounts.dev/v1/client/handshake?redirect_url=https%3A%2F%2Fcooking-with-clerk.vercel.app%2Fsign-in', {
+    //   redirect: "manual",
+    //   // credentials: "include",
+    //   // headers: {
+    //   //   "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7"
+    //   // }
+    // })
+    // console.log('asdfasdf', new URL(res.url))
+    // console.log(res)
+
     // router.push('/profile')
 
     // const url = "https://popular-corgi-5.accounts.dev/user"
